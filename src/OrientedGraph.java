@@ -13,7 +13,7 @@ public class OrientedGraph {
          for (int i = 0; i < numberOfVertex - 1; i++) {
              newList.add(0);
              ArrayList sideList = matrix.get(i);
-             sideList.add(0);
+             sideList.add(0); //фыв
          }
          matrix.add(newList);
      }
