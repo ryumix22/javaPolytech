@@ -3,31 +3,23 @@ import com.sun.org.apache.xpath.internal.operations.Or;
 import java.util.*;
 public class OrientedGraph {
     private ArrayList<ArrayList<Integer>> matrix;
-    private ArrayList<Integer> vertex;
+    private ArrayList<String> vertexNameList;
 
-    public ArrayList<Integer> getVertex() {
-        return vertex;
-    }
 
-    public ArrayList<ArrayList<Integer>> getMatrix() {
-        return matrix;
-    }
-
-    private static Integer[][] matrixOfGraph(ArrayList<ArrayList<Integer>> matrix, ArrayList<Integer> vertex) {
-        Integer size = vertex.size();
-        Integer[][] marx = new Integer[size][size];
-        for (ArrayList<Integer> helpList : matrix) {
-            marx[helpList.get(1)][helpList.get(2)] = helpList.get(3);
-        }
-        return marx;
-    }
-
-     public void addVertex(Integer newVertex) {
-        vertex.add(newVertex);
+     public void addVertex(String newVertex) {
+         vertexNameList.add(newVertex);
+         int numberOfVertex = vertexNameList.size();
+         ArrayList newList = new ArrayList();
+         for (int i = 0; i < numberOfVertex - 1; i++) {
+             newList.add(0);
+             ArrayList sideList = matrix.get(i);
+             sideList.add(0);
+         }
+         matrix.add(newList);
      }
 
      public void addArc(ArrayList<Integer> newArc) {
-        matrix.add(newArc);
+
      }
 
      public void deleteVertex(Integer oldVertex) {
