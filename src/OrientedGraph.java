@@ -2,12 +2,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 public class OrientedGraph {
-    private ArrayList<ArrayList<Integer>> matrix;
-    private ArrayList<String> vertexNameList;
+    private ArrayList<ArrayList<Integer>> matrix = new ArrayList<ArrayList<Integer>>();
+    private ArrayList<String> vertexNameList = new ArrayList<>();
 
 
      public void addVertex(String newVertex) {
-         vertexNameList.add(newVertex);
+         vertexNameList.add(newVertex.toLowerCase());
          int numberOfVertex = vertexNameList.size();
          ArrayList<Integer> newList = new ArrayList<>();
          newList.add(0);
@@ -36,14 +36,16 @@ public class OrientedGraph {
 
      public void deleteVertex (String nameOfVertex) {
          Integer vertexNumber = nameToNumber(nameOfVertex.toLowerCase());
-         matrix.remove(vertexNumber);
-         for (int i = 0; i < vertexNameList.size() - 1; i++) {
+         ArrayList subList = matrix.get(vertexNumber);
+         matrix.remove(subList);
+         vertexNameList.remove(nameOfVertex);
+         for (int i = 0; i < vertexNameList.size(); i++) {
              matrix.get(i).remove(vertexNumber);
          }
      }
 
      public void deleteArc (String start, String end) {
-         matrix.get(nameToNumber(start.toLowerCase())).remove(nameToNumber(end.toLowerCase()));
+         matrix.get(nameToNumber(start.toLowerCase())).set(nameToNumber(end.toLowerCase()), 0);
      }
 
      public void renameVertex (String oldVertex, String newVertex) {
@@ -57,8 +59,9 @@ public class OrientedGraph {
 
      public Integer countOfOutgoing (String name) {
          Integer count = 0;
+         Integer pos = nameToNumber(name);
          for (int i = 0; i < vertexNameList.size(); i++) {
-             if (matrix.get(nameToNumber(name)).get(i) != 0) count++;
+             if (matrix.get(pos).get(i) != 0) count++;
          }
          return count;
      }
@@ -69,6 +72,11 @@ public class OrientedGraph {
              if (matrix.get(i).get(nameToNumber(name)) != 0) count++;
          }
          return count;
+     }
+
+     public Integer getWeight (String start, String end) {
+         ArrayList<Integer> subList = matrix.get(nameToNumber(start));
+         return subList.get(nameToNumber(end));
      }
 
 }
