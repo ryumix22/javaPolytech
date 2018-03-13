@@ -16,6 +16,8 @@ public class Mainn {
         System.out.println(graph.countOfIngoing("kek"));
         graph.addArc("c", "kek",  12);
         System.out.println(graph.getWeight("c", "kek"));
+        graph.changeWeight("c", "kek", 22);
+        System.out.println(graph.getWeight("c", "kek"));
 
     }
 }
