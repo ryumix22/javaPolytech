@@ -116,19 +116,5 @@ public class OrientedGraph {
                 '}';
     }
 
-    public static void main(String[] args) {
-        OrientedGraph graph = new OrientedGraph();
-        graph.addVertex("Moscow");
-        graph.addVertex("Spb");
-        graph.addVertex("Kiev");
-        graph.addVertex("voronezh");
-        graph.addArc("moscow", "spb", 800);
-        graph.addArc("moscow", "kiev", 1300);
-        graph.addArc("spb", "kiev", 1400);
-        graph.addArc("moscow", "voronezh", 400);
-        graph.addArc("kiev", "voronezh", 500);
-        graph.addArc("voronezh", "spb", 1100);
-        System.out.println(graph.listOfIngoing("spb"));
-        System.out.println(graph.listOfOutgoing("spb"));
-    }
+
 }
