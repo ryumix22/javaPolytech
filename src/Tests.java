@@ -1,5 +1,8 @@
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import static org.junit.Assert.assertEquals;
 
 
@@ -120,10 +123,12 @@ public class Tests {
         graph.addArc("moscow", "voronezh", 400);
         graph.addArc("kiev", "voronezh", 500);
         graph.addArc("voronezh", "spb", 1100);
-        assertEquals("0", graph.countOfIngoing("moscow").toString());
-        assertEquals("2", graph.countOfIngoing("spb").toString());
-        assertEquals("2", graph.countOfIngoing("kiev").toString());
-        assertEquals("2", graph.countOfIngoing("voronezh").toString());
+        ArrayList<String> list1 = new ArrayList<>();
+        ArrayList<String> noArc = new ArrayList<>();
+        noArc.add("no arcs");
+        Collections.addAll(list1, "from moscow 800", "from voronezh 1100");
+        assertEquals(noArc , graph.listOfIngoing("moscow"));
+        assertEquals(list1, graph.listOfIngoing("spb"));
     }
 
     @Test
@@ -138,10 +143,14 @@ public class Tests {
         graph.addArc("moscow", "voronezh", 400);
         graph.addArc("kiev", "voronezh", 500);
         graph.addArc("voronezh", "spb", 1100);
-        assertEquals("3", graph.countOfOutgoing("moscow").toString());
-        assertEquals("1", graph.countOfOutgoing("spb").toString());
-        assertEquals("1", graph.countOfOutgoing("voronezh").toString());
-        assertEquals("1", graph.countOfOutgoing("kiev").toString());
+        ArrayList<String> list1 = new ArrayList<>();
+        ArrayList<String> noArc = new ArrayList<>();
+        ArrayList<String> list2 = new ArrayList<>();
+        noArc.add("no arc");
+        Collections.addAll(list1, "into spb 800", "into kiev 1300", "into voronezh 400");
+        Collections.addAll(list2, "into kiev 1400");
+        assertEquals(list1, graph.listOfOutgoing("moscow"));
+        assertEquals(list2, graph.listOfOutgoing("spb"));
     }
 
     @Test

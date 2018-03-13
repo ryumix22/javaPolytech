@@ -1,6 +1,6 @@
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
 public class OrientedGraph {
     private ArrayList<ArrayList<Integer>> matrix = new ArrayList<>();
     private ArrayList<String> vertexNameList = new ArrayList<>();
@@ -59,21 +59,35 @@ public class OrientedGraph {
          matrix.get(nameToNumber(start)).set(nameToNumber(end), newWeight);
      }
 
-     public Integer countOfIngoing (String name) {
-         int count = 0;
+     public ArrayList<String> listOfIngoing (String name) {
+         ArrayList<String> list = new ArrayList<>();
+         int pos = nameToNumber(name);
          for (int i = 0; i < vertexNameList.size(); i++) {
-             if (matrix.get(i).get(nameToNumber(name)) != 0) count++;
+             if (matrix.get(i).get(pos) != 0) {
+                 list.add("from " + vertexNameList.get(i) + " " + Integer.toString(matrix.get(i).get(pos)));
+             }
          }
-         return count;
+         if (list.isEmpty()) {
+             list.add("no arcs");
+             return list;
+         }
+         else
+         return list;
      }
 
-     public Integer countOfOutgoing (String name) {
-        Integer count = 0;
-        Integer pos = nameToNumber(name);
+     public ArrayList<String> listOfOutgoing (String name) {
+        ArrayList<String> list = new ArrayList<>();
+        int pos = nameToNumber(name);
         for (int i = 0; i < vertexNameList.size(); i++) {
-            if (matrix.get(pos).get(i) != 0) count++;
+            if (matrix.get(pos).get(i) != 0)
+                list.add("into " + vertexNameList.get(i) + " " + Integer.toString(matrix.get(pos).get(i)));
         }
-        return count;
+        if (list.isEmpty()) {
+            list.add("no arcs");
+            return list;
+         }
+        else
+            return list;
      }
 
     @Override
@@ -100,5 +114,21 @@ public class OrientedGraph {
                 "matrix=" + matrix +
                 ", vertexNameList=" + vertexNameList +
                 '}';
+    }
+
+    public static void main(String[] args) {
+        OrientedGraph graph = new OrientedGraph();
+        graph.addVertex("Moscow");
+        graph.addVertex("Spb");
+        graph.addVertex("Kiev");
+        graph.addVertex("voronezh");
+        graph.addArc("moscow", "spb", 800);
+        graph.addArc("moscow", "kiev", 1300);
+        graph.addArc("spb", "kiev", 1400);
+        graph.addArc("moscow", "voronezh", 400);
+        graph.addArc("kiev", "voronezh", 500);
+        graph.addArc("voronezh", "spb", 1100);
+        System.out.println(graph.listOfIngoing("spb"));
+        System.out.println(graph.listOfOutgoing("spb"));
     }
 }
